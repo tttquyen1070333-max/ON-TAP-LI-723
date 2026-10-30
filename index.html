@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Giữa HK1 - Vật Lý 7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Lexend', sans-serif; }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-slate-800 p-3 sm:p-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="glass-card rounded-2xl p-6 mb-6 shadow-2xl text-center border-b-4 border-indigo-500">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-indigo-900 mb-2">
+                 TRÒ CHƠI ÔN TẬP VẬT LÝ 7
+            </h1>
+            <p class="text-slate-600 font-medium">ÔN TẬP GIỮA HỌC KÌ I - ĐẦY ĐỦ DẠNG BÀI TẬP</p>
+        </header>
+
+        <!-- Bảng Lý Thuyết Trọng Tâm -->
+        <div class="glass-card rounded-2xl p-6 mb-6 shadow-lg border-l-4 border-amber-500">
+            <div class="flex items-center justify-between cursor-pointer" onclick="toggleTheory()">
+                <h2 class="text-lg font-bold text-amber-800 flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark"></i> I. Kiến thức trọng tâm
+                </h2>
+                <span id="theoryToggleIcon" class="text-amber-800 font-bold"><i class="fa-solid fa-chevron-down"></i></span>
+            </div>
+            <div id="theoryContent" class="hidden mt-4 pt-4 border-t border-slate-200 text-sm space-y-3">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-amber-50 p-4 rounded-xl border border-amber-200">
+                    <div>
+                        <p class="font-bold text-indigo-900">1. Tốc độ:</p>
+                        <p class="italic">v = s / t</p>
+                        <p class="text-xs text-slate-600">v: Tốc độ (m/s, km/h...)</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-indigo-900">2. Quãng đường:</p>
+                        <p class="italic">s = v . t</p>
+                        <p class="text-xs text-slate-600">s: Quãng đường (m, km...)</p>
+                    </div>
+                    <div>
+                        <p class="font-bold text-indigo-900">3. Thời gian:</p>
+                        <p class="italic">t = s / v</p>
+                        <p class="text-xs text-slate-600">t: Thời gian (s, h...)</p>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs sm:text-sm space-y-1">
+                    <p>• <b>1 km/h</b> = 1 / 3,6 m/s (Ví dụ: 40 km/h = 40 / 3,6 m/s ≈ 11,11 m/s)</p>
+                    <p>• <b>1 m/s</b> = 3,6 km/h (Ví dụ: 5 m/s = 5 . 3,6 = 18 km/h)</p>
+                    <p>• <b>1 phút</b> = 60s (Ví dụ: 2 phút = 60 . 2 = 120 s)</p>
+                    <p>• <b>1 phút</b> = 1 / 60 h (Ví dụ: 20 phút = 20 / 60 = 1/3 h)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PHẦN I: TRẮC NGHIỆM NHIỀU LỰA CHỌN -->
+        <section class="glass-card rounded-2xl p-6 mb-6 shadow-xl">
+            <h2 class="text-xl font-bold text-indigo-900 mb-4 pb-2 border-b border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-indigo-600"></i>
+                I. TRẮC NGHIỆM KHÁCH QUAN NHIỀU LỰA CHỌN
+            </h2>
+            <div id="mcq-container" class="space-y-6"></div>
+        </section>
+
+        <!-- PHẦN II: TRẮC NGHIỆM ĐÚNG - SAI -->
+        <section class="glass-card rounded-2xl p-6 mb-6 shadow-xl">
+            <h2 class="text-xl font-bold text-indigo-900 mb-4 pb-2 border-b border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-toggle-on text-emerald-600"></i>
+                II. TRẮC NGHIỆM KHÁCH QUAN DẠNG “ĐÚNG – SAI”
+            </h2>
+            <div id="tf-container" class="space-y-6"></div>
+        </section>
+
+        <!-- PHẦN III: TỰ LUẬN -->
+        <section class="glass-card rounded-2xl p-6 mb-6 shadow-xl">
+            <h2 class="text-xl font-bold text-indigo-900 mb-4 pb-2 border-b border-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-pen-nib text-purple-600"></i>
+                III. PHẦN TỰ LUẬN (CÓ GHI ÂM & NHẬP VĂN BẢN)
+            </h2>
+            <div id="essay-container" class="space-y-8"></div>
+        </section>
+
+        <!-- BẢNG TỔNG KẾT & NÚT NỘP BÀI -->
+        <div class="glass-card rounded-2xl p-6 mb-12 shadow-2xl text-center space-y-4">
+            <button onclick="calculateScore()" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-extrabold text-lg rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i> NỘP BÀI VÀ THỐNG KÊ ĐIỂM
+            </button>
+
+            <div id="score-report" class="hidden p-6 bg-slate-50 rounded-xl border border-indigo-100 text-left space-y-3">
+                <h3 class="text-2xl font-bold text-indigo-900 text-center mb-4">🏆 BÁO CÁO KẾT QUẢ ÔN TẬP</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <p class="text-sm font-medium text-blue-700">Trắc nghiệm lựa chọn</p>
+                        <p id="mcq-score" class="text-2xl font-black text-blue-900">0 / 6</p>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <p class="text-sm font-medium text-emerald-700">Trắc nghiệm Đúng/Sai</p>
+                        <p id="tf-score" class="text-2xl font-black text-emerald-900">0 / 12</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                        <p class="text-sm font-medium text-purple-700">Tự luận hoàn thành</p>
+                        <p id="essay-score" class="text-2xl font-black text-purple-900">0 / 3</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-slate-200 text-center">
+                    <p class="text-lg font-bold text-slate-700">Tổng điểm trắc nghiệm: <span id="total-score" class="text-3xl font-extrabold text-indigo-600">0</span> / 10</p>
+                    <p id="evaluation-text" class="mt-2 text-sm italic text-slate-600"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DỮ LIỆU CÂU HỎI GIỮ NGUYÊN 100% VĂN BẢN ---
+        const mcqData = [
+            {
+                id: 1,
+                question: "Câu 1. Một vật chuyển động với quãng đường 120m trong thời gian 30s. Tốc độ chuyển động của vật là:",
+                options: ["A. 2m/s.", "B. 4m/s.", "C. 6m/s.", "D. 8m/s."],
+                correct: 1 // B
+            },
+            {
+                id: 2,
+                question: "Câu 2. Một vật chuyển động với tốc độ v trong thời gian là t, quãng đường chuyển động của vật được tính bằng công thức nào?",
+                options: ["A. v = s/t.", "B. s = v.t.", "C. v = t/s.", "D. s = v/t."],
+                correct: 1 // B
+            },
+            {
+                id: 3,
+                question: "Câu 3. Một người đi bộ với tốc độ 2m/s, để đi hết quãng đường dài 0,5km người này cần thời gian là bao nhiêu?",
+                options: ["A. 25s.", "B. 250s.", "C. 100s", "D. 10s."],
+                correct: 1 // B
+            },
+            {
+                id: 4,
+                question: "Câu 4. Đổi tốc độ 36km/h ra đơn vị m/s ta được kết quả là:",
+                options: ["A. 10.", "B. 100.", "C. 360.", "D. 25s"],
+                correct: 0 // A
+            },
+            {
+                id: 5,
+                question: "Câu 5. An đạp xe từ nhà đến trường mất 10 phút, biết tốc độ của An là 5m/s. Tính quãng đường từ nhà An đến trường.",
+                options: ["A. 3km.", "B. 2km.", "C. 1km.", "D. 4km."],
+                correct: 0 // A
+            },
+            {
+                id: 6,
+                question: "Câu 6. Công thức tính tốc độ là:",
+                options: ["A. v = s/t.", "B. v = t/s.", "C. v = s.t.", "D. v = s - t."],
+                correct: 0 // A
+            }
+        ];
+
+        const tfData = [
+            {
+                id: 6,
+                title: "Câu 6. Tốc độ chuyển động của vật",
+                items: [
+                    { label: "A. Tốc độ có đơn vị là km/s.", correct: false },
+                    { label: "B. Công thức tính tốc độ là v = s/t.", correct: true },
+                    { label: "C. Tốc độ cho biết sự nhanh chậm của chuyển động.", correct: true },
+                    { label: "D. Trong cùng một thời gian, vật chuyển động được quãng đường dài hơn sẽ có tốc độ nhanh hơn.", correct: true }
+                ]
+            },
+            {
+                id: 7,
+                title: "Câu 7. Tốc độ chuyển động của vật",
+                items: [
+                    { label: "A. Trong cùng một thời gian vật chuyển động được quãng đường dài hơn sẽ có tốc độ chậm hơn.", correct: false },
+                    { label: "B. Trong cùng một thời gian, vật có tốc độ chậm hơn sẽ đi được quãng đường ngắn hơn.", correct: true },
+                    { label: "C. Trên cùng một quãng đường, vật có tốc độ nhanh hơn sẽ chuyển động với thời gian nhiều hơn.", correct: false },
+                    { label: "D. Trên cùng một quãng đường, vật có tốc độ chậm hơn sẽ chuyển động với thời gian nhiều hơn.", correct: true }
+                ]
+            },
+            {
+                id: 8,
+                title: "Câu 8. Tốc độ chuyển động của vật",
+                items: [
+                    { label: "A. Đặc trưng cho sự nhanh chậm của chuyển động được gọi là tốc độ.", correct: true },
+                    { label: "B. Tốc độ chuyển động được xác định bằng quãng đường đi được trong một đơn vị thời gian.", correct: true },
+                    { label: "C. Đơn vị tốc độ chuyển động là km và m.", correct: false },
+                    { label: "D. Vật chuyển động thẳng đều sẽ có tốc độ tăng, giảm theo thời gian.", correct: false }
+                ]
+            }
+        ];
+
+        const essayData = [
+            {
+                id: 201,
+                title: "Câu 20 (1). Cho đồ thị quãng đường - thời gian của một ô tô:",
+                svgGraph: `
+                    <svg viewBox="0 0 400 280" class="w-full max-w-md mx-auto bg-white rounded-lg shadow border border-slate-200">
+                        <defs>
+                            <pattern id="grid1" width="40" height="35" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 35" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="320" height="210" x="50" y="20" fill="url(#grid1)" />
+                        <!-- Trục -->
+                        <line x1="50" y1="230" x2="380" y2="230" stroke="#000" stroke-width="2" marker-end="url(#arrow)"/>
+                        <line x1="50" y1="230" x2="50" y2="10" stroke="#000" stroke-width="2" marker-end="url(#arrow)"/>
+                        <text x="30" y="20" font-size="12" font-weight="bold">s (m)</text>
+                        <text x="360" y="250" font-size="12" font-weight="bold">t (giây)</text>
+                        <!-- Nhãn Y -->
+                        <text x="10" y="130" font-size="11">1000</text>
+                        <line x1="45" y1="125" x2="50" y2="125" stroke="#000"/>
+                        <line x1="50" y1="125" x2="170" y2="125" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="10" y="77" font-size="11">1500</text>
+                        <line x1="50" y1="72" x2="250" y2="72" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="10" y="25" font-size="11">2000</text>
+                        <line x1="45" y1="20" x2="50" y2="20" stroke="#000"/>
+                        <line x1="50" y1="20" x2="330" y2="20" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <!-- Nhãn X -->
+                        <text x="47" y="245" font-size="11">0</text>
+                        <text x="85" y="245" font-size="11">5</text>
+                        <text x="120" y="245" font-size="11">10</text>
+                        <text x="160" y="245" font-size="11">15</text>
+                        <line x1="170" y1="230" x2="170" y2="125" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="200" y="245" font-size="11">20</text>
+                        <line x1="210" y1="230" x2="210" y2="125" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="240" y="245" font-size="11">25</text>
+                        <line x1="250" y1="230" x2="250" y2="72" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="320" y="245" font-size="11">30</text>
+                        <line x1="330" y1="230" x2="330" y2="20" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <!-- Đường đồ thị -->
+                        <polyline points="50,230 170,125 210,125 330,20" fill="none" stroke="#f97316" stroke-width="3"/>
+                        <circle cx="170" cy="125" r="4" fill="#ea580c"/>
+                        <text x="165" y="115" font-size="12" font-weight="bold">A</text>
+                        <circle cx="210" cy="125" r="4" fill="#ea580c"/>
+                        <text x="215" y="120" font-size="12" font-weight="bold">B</text>
+                        <circle cx="330" cy="20" r="4" fill="#ea580c"/>
+                        <text x="335" y="20" font-size="12" font-weight="bold">C</text>
+                    </svg>
+                `,
+                subQuestions: "Dựa vào đồ thị hãy:\n- Xác định tốc độ của ô tô trong 15 giây đầu.\n- Xác định quãng đường đi được của ô tô sau 25 giây từ khi khởi hành.",
+                sampleAnswer: "- Tốc độ của ô tô trong 15 giây đầu: v = s/t = 1000/15 = 66,67 m/s (0,5 điểm)\n- Từ đồ thị, quãng đường đi được của ô tô sau 25 giây từ khi khởi hành là: s = 1500m (0,5 điểm)"
+            },
+            {
+                id: 202,
+                title: "Câu 20 (2). Cho đồ thị quãng đường thời gian của một xe máy:",
+                svgGraph: `
+                    <svg viewBox="0 0 400 280" class="w-full max-w-md mx-auto bg-white rounded-lg shadow border border-slate-200">
+                        <!-- Lưới -->
+                        <line x1="50" y1="220" x2="370" y2="220" stroke="#000" stroke-width="2"/>
+                        <line x1="50" y1="220" x2="50" y2="20" stroke="#000" stroke-width="2"/>
+                        <text x="25" y="25" font-size="12" font-weight="bold">s (km)</text>
+                        <text x="360" y="240" font-size="12" font-weight="bold">t (h)</text>
+                        <!-- Grid horizontal -->
+                        <line x1="50" y1="170" x2="350" y2="170" stroke="#cbd5e1"/>
+                        <text x="20" y="175" font-size="11">60</text>
+                        <line x1="50" y1="120" x2="350" y2="120" stroke="#cbd5e1"/>
+                        <text x="15" y="125" font-size="11">120</text>
+                        <line x1="50" y1="70" x2="350" y2="70" stroke="#cbd5e1"/>
+                        <text x="15" y="75" font-size="11">180</text>
+                        <line x1="50" y1="20" x2="350" y2="20" stroke="#cbd5e1"/>
+                        <text x="15" y="25" font-size="11">240</text>
+                        <!-- Grid vertical -->
+                        <line x1="100" y1="220" x2="100" y2="20" stroke="#cbd5e1"/>
+                        <text x="95" y="235" font-size="11">2</text>
+                        <line x1="150" y1="220" x2="150" y2="20" stroke="#cbd5e1"/>
+                        <text x="145" y="235" font-size="11">4</text>
+                        <line x1="200" y1="220" x2="200" y2="20" stroke="#cbd5e1"/>
+                        <text x="195" y="235" font-size="11">6</text>
+                        <line x1="250" y1="220" x2="250" y2="20" stroke="#cbd5e1"/>
+                        <text x="245" y="235" font-size="11">8</text>
+                        <line x1="300" y1="220" x2="300" y2="20" stroke="#cbd5e1"/>
+                        <text x="295" y="235" font-size="11">10</text>
+                        <!-- Line -->
+                        <polyline points="50,220 100,170 150,120 200,70 250,70 300,70" fill="none" stroke="#ef4444" stroke-width="3"/>
+                        <circle cx="100" cy="170" r="4" fill="#dc2626"/><text x="95" y="160" font-size="11" font-weight="bold">A</text>
+                        <circle cx="150" cy="120" r="4" fill="#dc2626"/><text x="145" y="110" font-size="11" font-weight="bold">B</text>
+                        <circle cx="200" cy="70" r="4" fill="#dc2626"/><text x="195" y="60" font-size="11" font-weight="bold">C</text>
+                        <circle cx="250" cy="70" r="4" fill="#dc2626"/><text x="245" y="60" font-size="11" font-weight="bold">D</text>
+                        <circle cx="300" cy="70" r="4" fill="#dc2626"/><text x="295" y="60" font-size="11" font-weight="bold">D</text>
+                    </svg>
+                `,
+                subQuestions: "Từ đồ thị hãy:\n- Xác định tốc độ của xe máy trong 4 giờ đầu.\n- Xác định quãng đường đi được của xe máy sau 10 giờ từ khi khởi hành.",
+                sampleAnswer: "- Tốc độ của xe máy trong 4 giờ đầu: v = s/t = 120/4 = 30 km/h (0,5 điểm)\n- Từ đồ thị, quãng đường đi được của xe máy sau 10 giờ từ khi khởi hành là: s = 180km (0,5 điểm)"
+            },
+            {
+                id: 203,
+                title: "Câu 20 (3). Cho đồ thị quãng đường thời gian của một người đi bộ:",
+                svgGraph: `
+                    <svg viewBox="0 0 380 250" class="w-full max-w-md mx-auto bg-white rounded-lg shadow border border-slate-200">
+                        <line x1="50" y1="200" x2="350" y2="200" stroke="#000" stroke-width="2"/>
+                        <line x1="50" y1="200" x2="50" y2="20" stroke="#000" stroke-width="2"/>
+                        <text x="20" y="25" font-size="12" font-weight="bold">s (m)</text>
+                        <text x="330" y="220" font-size="12" font-weight="bold">t (s)</text>
+                        
+                        <!-- Axis values -->
+                        <text x="25" y="150" font-size="11">4</text>
+                        <line x1="50" y1="145" x2="130" y2="145" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="25" y="100" font-size="11">8</text>
+                        <line x1="50" y1="95" x2="210" y2="95" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="20" y="50" font-size="11">12</text>
+                        <line x1="50" y1="45" x2="290" y2="45" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        
+                        <text x="125" y="215" font-size="11">2</text>
+                        <line x1="130" y1="200" x2="130" y2="145" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="205" y="215" font-size="11">4</text>
+                        <line x1="210" y1="200" x2="210" y2="95" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        <text x="285" y="215" font-size="11">6</text>
+                        <line x1="290" y1="200" x2="290" y2="45" stroke="#94a3b8" stroke-dasharray="3,3"/>
+                        
+                        <line x1="50" y1="200" x2="290" y2="45" stroke="#0284c7" stroke-width="3"/>
+                    </svg>
+                `,
+                subQuestions: "Từ đồ thị hãy:\n- Xác định tốc độ của người đi bộ trong 4 giây đầu.\n- Xác định quãng đường đi được của người đi bộ sau 6 giây từ khi khởi hành.",
+                sampleAnswer: "- Tốc độ của người đi bộ trong 4 giây đầu: v = s/t = 8/4 = 2 m/s (0,5 điểm)\n- Từ đồ thị, quãng đường đi được của người đi bộ sau 6 giây từ khi khởi hành là: s = 12m (0,5 điểm)"
+            }
+        ];
+
+        // --- TẢI GIAO DIỆN ---
+        function renderMCQ() {
+            const container = document.getElementById('mcq-container');
+            container.innerHTML = mcqData.map((item, index) => `
+                <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200">
+                    <p class="font-semibold text-slate-900 mb-3">${item.question}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${item.options.map((opt, optIndex) => `
+                            <button onclick="selectMCQ(${index}, ${optIndex})" id="mcq-btn-${index}-${optIndex}"
+                                class="mcq-opt-${index} text-left p-3 rounded-lg border border-slate-300 bg-white hover:bg-indigo-50 transition flex items-center justify-between">
+                                <span>${opt}</span>
+                                <span class="status-icon"></span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="mcq-feedback-${index}" class="mt-3 text-sm font-medium hidden"></div>
+                </div>
+            `).join('');
+        }
+
+        function renderTF() {
+            const container = document.getElementById('tf-container');
+            container.innerHTML = tfData.map((group, groupIndex) => `
+                <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 space-y-3">
+                    <h3 class="font-bold text-indigo-900">${group.title}</h3>
+                    <div class="space-y-2">
+                        ${group.items.map((item, itemIndex) => `
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-white rounded-lg border border-slate-200">
+                                <span class="text-sm font-medium text-slate-800">${item.label}</span>
+                                <div class="flex items-center gap-2 shrink-0">
+                                    <button onclick="selectTF(${groupIndex}, ${itemIndex}, true)" id="tf-btn-${groupIndex}-${itemIndex}-true"
+                                        class="px-4 py-1.5 rounded-lg border border-slate-300 text-sm font-bold transition hover:bg-emerald-100">
+                                        ĐÚNG
+                                    </button>
+                                    <button onclick="selectTF(${groupIndex}, ${itemIndex}, false)" id="tf-btn-${groupIndex}-${itemIndex}-false"
+                                        class="px-4 py-1.5 rounded-lg border border-slate-300 text-sm font-bold transition hover:bg-rose-100">
+                                        SAI
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEssay() {
+            const container = document.getElementById('essay-container');
+            container.innerHTML = essayData.map((item, index) => `
+                <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-200 space-y-4">
+                    <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
+                    ${item.svgGraph}
+                    <p class="whitespace-pre-line text-sm text-slate-700 font-medium bg-indigo-50/50 p-3 rounded-lg border border-indigo-100">${item.subQuestions}</p>
+                    
+                    <!-- Khung Nhập Liệu & Ghi Âm -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-slate-600">Bài làm của học sinh:</label>
+                            <button onclick="toggleRecording(${index})" id="record-btn-${index}" 
+                                class="px-3 py-1.5 bg-rose-500 hover:bg-rose-600 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow transition">
+                                <i class="fa-solid fa-microphone"></i> <span id="record-text-${index}">Ghi âm</span>
+                            </button>
+                        </div>
+                        <textarea id="essay-input-${index}" rows="3" placeholder="Nhập câu trả lời của bạn hoặc bấm nút Ghi âm..." 
+                            class="w-full p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 text-sm focus:outline-none"></textarea>
+                    </div>
+
+                    <button onclick="toggleSampleAnswer(${index})" class="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-eye"></i> Xem đáp án & biểu điểm
+                    </button>
+                    <div id="sample-answer-${index}" class="hidden p-3 bg-emerald-50 text-emerald-900 rounded-lg text-xs font-mono border border-emerald-200 whitespace-pre-line">
+                        ${item.sampleAnswer}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- XỬ LÝ TRẮC NGHIỆM LỰA CHỌN ---
+        const userMCQ = {};
+        function selectMCQ(qIndex, optIndex) {
+            userMCQ[qIndex] = optIndex;
+            const correctIndex = mcqData[qIndex].correct;
+            const buttons = document.querySelectorAll(`.mcq-opt-${qIndex}`);
+            
+            buttons.forEach((btn, idx) => {
+                btn.className = "mcq-opt-" + qIndex + " text-left p-3 rounded-lg border transition flex items-center justify-between ";
+                if (idx === correctIndex) {
+                    btn.classList.add("bg-emerald-100", "border-emerald-500", "text-emerald-900", "font-bold");
+                } else if (idx === optIndex && optIndex !== correctIndex) {
+                    btn.classList.add("bg-rose-100", "border-rose-500", "text-rose-900");
+                } else {
+                    btn.classList.add("bg-white", "border-slate-200", "opacity-60");
+                }
+            });
+
+            const feedback = document.getElementById(`mcq-feedback-${qIndex}`);
+            feedback.classList.remove('hidden', 'text-emerald-600', 'text-rose-600');
+            if (optIndex === correctIndex) {
+                feedback.classList.add('text-emerald-600');
+                feedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> Chúc mừng! Bạn chọn chính xác.';
+            } else {
+                feedback.classList.add('text-rose-600');
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Chưa đúng! Đáp án đúng là phương án ${String.fromCharCode(65 + correctIndex)}.`;
+            }
+        }
+
+        // --- XỬ LÝ TRẮC NGHIỆM ĐÚNG SAI ---
+        const userTF = {};
+        function selectTF(groupIndex, itemIndex, value) {
+            if (!userTF[groupIndex]) userTF[groupIndex] = {};
+            userTF[groupIndex][itemIndex] = value;
+
+            const btnTrue = document.getElementById(`tf-btn-${groupIndex}-${itemIndex}-true`);
+            const btnFalse = document.getElementById(`tf-btn-${groupIndex}-${itemIndex}-false`);
+
+            if (value) {
+                btnTrue.className = "px-4 py-1.5 rounded-lg border text-sm font-bold bg-indigo-600 text-white border-indigo-600 shadow";
+                btnFalse.className = "px-4 py-1.5 rounded-lg border border-slate-300 text-sm font-bold opacity-50 bg-white";
+            } else {
+                btnFalse.className = "px-4 py-1.5 rounded-lg border text-sm font-bold bg-indigo-600 text-white border-indigo-600 shadow";
+                btnTrue.className = "px-4 py-1.5 rounded-lg border border-slate-300 text-sm font-bold opacity-50 bg-white";
+            }
+        }
+
+        // --- GHI ÂM (SPEECH RECOGNITION API) ---
+        let recognition = null;
+        let isRecording = false;
+        let activeRecordIndex = null;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'vi-VN';
+
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    transcript += event.results[i][0].transcript;
+                }
+                if (activeRecordIndex !== null) {
+                    const textarea = document.getElementById(`essay-input-${activeRecordIndex}`);
+                    textarea.value = transcript;
+                }
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Lỗi ghi âm:", event.error);
+                stopRecording();
+            };
+
+            recognition.onend = function() {
+                stopRecording();
+            };
+        }
+
+        function toggleRecording(index) {
+            if (!recognition) {
+                alert("Trình duyệt của bạn không hỗ trợ tính năng Ghi âm nhận diện giọng nói. Hãy dùng Google Chrome!");
+                return;
+            }
+
+            if (isRecording && activeRecordIndex === index) {
+                recognition.stop();
+            } else {
+                if (isRecording) recognition.stop();
+                activeRecordIndex = index;
+                recognition.start();
+                isRecording = true;
+                
+                const btn = document.getElementById(`record-btn-${index}`);
+                const text = document.getElementById(`record-text-${index}`);
+                btn.classList.replace('bg-rose-500', 'bg-emerald-600');
+                btn.classList.add('animate-pulse');
+                text.innerText = "Đang ghi âm...";
+            }
+        }
+
+        function stopRecording() {
+            isRecording = false;
+            if (activeRecordIndex !== null) {
+                const btn = document.getElementById(`record-btn-${activeRecordIndex}`);
+                const text = document.getElementById(`record-text-${activeRecordIndex}`);
+                if (btn && text) {
+                    btn.classList.replace('bg-emerald-600', 'bg-rose-500');
+                    btn.classList.remove('animate-pulse');
+                    text.innerText = "Ghi âm";
+                }
+            }
+            activeRecordIndex = null;
+        }
+
+        function toggleSampleAnswer(index) {
+            const el = document.getElementById(`sample-answer-${index}`);
+            el.classList.toggle('hidden');
+        }
+
+        function toggleTheory() {
+            const content = document.getElementById('theoryContent');
+            const icon = document.getElementById('theoryToggleIcon');
+            content.classList.toggle('hidden');
+            icon.innerHTML = content.classList.contains('hidden') ? '<i class="fa-solid fa-chevron-down"></i>' : '<i class="fa-solid fa-chevron-up"></i>';
+        }
+
+        // --- TÍNH ĐIỂM & THỐNG KÊ ---
+        function calculateScore() {
+            // 1. MCQ Score
+            let mcqCorrect = 0;
+            mcqData.forEach((item, index) => {
+                if (userMCQ[index] === item.correct) mcqCorrect++;
+            });
+
+            // 2. True / False Score
+            let tfCorrect = 0;
+            let tfTotal = 0;
+            tfData.forEach((group, groupIndex) => {
+                group.items.forEach((item, itemIndex) => {
+                    tfTotal++;
+                    if (userTF[groupIndex] && userTF[groupIndex][itemIndex] === item.correct) {
+                        tfCorrect++;
+                    }
+                });
+            });
+
+            // 3. Essay Count
+            let essayCompleted = 0;
+            essayData.forEach((item, index) => {
+                const text = document.getElementById(`essay-input-${index}`).value.trim();
+                if (text.length > 0) essayCompleted++;
+            });
+
+            // Quy đổi điểm hệ 10 (Trắc nghiệm Lựa chọn: 3 đ, Đúng Sai: 4 đ, Tự luận: 3 đ)
+            const mcqScore = (mcqCorrect / mcqData.length) * 3;
+            const tfScore = (tfCorrect / tfTotal) * 4;
+            const essayScore = (essayCompleted / essayData.length) * 3;
+            const totalScore = (mcqScore + tfScore + essayScore).toFixed(1);
+
+            document.getElementById('mcq-score').innerText = `${mcqCorrect} / ${mcqData.length}`;
+            document.getElementById('tf-score').innerText = `${tfCorrect} / ${tfTotal}`;
+            document.getElementById('essay-score').innerText = `${essayCompleted} / ${essayData.length}`;
+            document.getElementById('total-score').innerText = totalScore;
+
+            const evalText = document.getElementById('evaluation-text');
+            if (totalScore >= 8) {
+                evalText.innerText = "🌟 Xuất sắc! Bạn đã nắm rất vững kiến thức Vật lý 7!";
+            } else if (totalScore >= 5) {
+                evalText.innerText = "👍 Khá tốt! Hãy ôn lại các câu trả lời sai để đạt điểm tối đa nhé.";
+            } else {
+                evalText.innerText = "💪 Cố gắng lên! Đọc lại phần Lý thuyết trọng tâm ở đầu trang và làm lại nào.";
+            }
+
+            document.getElementById('score-report').classList.remove('hidden');
+            document.getElementById('score-report').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Khởi tạo app
+        window.onload = function() {
+            renderMCQ();
+            renderTF();
+            renderEssay();
+        };
+    </script>
+</body>
+</html>
